@@ -62,15 +62,28 @@ function enterdata() {
         else {
             console.log(response)
             localStorage.setItem("cheapestflight", JSON.stringify(response.data[arrCode][1]));
-            var today = moment().format("YYYY-MM-")
-            var day = moment().format("DD")
-            var APIdayOne = parseInt(day) - 1
-            var APIdayTwo = parseInt(day) - 11
-
+            var elevenDaysAgo = moment().subtract(11, 'days')
+            var date11 = JSON.stringify(elevenDaysAgo._d)
+            var month11Slice = date11.slice(6,8)
+            var date11Slice = date11.slice(9,11)
+            var year11Slice = date11.slice(1,5)
+            // ------------------------------------------------------------ \\
+            var secondAPIDate = (year11Slice + "-" + month11Slice + "-" + date11Slice)
+            console.log(secondAPIDate)
+            // ------------------------------------------------------------ \\
+            var oneDayAgo = moment().subtract(1, 'days')
+            var date1 = JSON.stringify(oneDayAgo._d)
+            var month1Slice = date1.slice(6,8)
+            var date1Slice = date1.slice(9,11)
+            var year1Slice = date1.slice(1,5)
+            // ------------------------------------------------------------ \\
+            var firstAPIDate = (year1Slice + "-" + month1Slice + "-" +date1Slice)
+            console.log(firstAPIDate)
+            // ------------------------------------------------------------ \\
             var covidAPI = {
                 "async": true,
                 "crossDomain": true,
-                "url": "https://covid-19-statistics.p.rapidapi.com/reports?region_province=" + covidState + "&date=" + today + parseInt(APIdayOne),
+                "url": "https://covid-19-statistics.p.rapidapi.com/reports?region_province=" + covidState + "&date=" + firstAPIDate,
                 "method": "GET",
                 "headers": {
                     "x-rapidapi-host": "covid-19-statistics.p.rapidapi.com",
@@ -85,7 +98,7 @@ function enterdata() {
             var covidAPI = {
                 "async": true,
                 "crossDomain": true,
-                "url": "https://covid-19-statistics.p.rapidapi.com/reports?region_province=" + covidState + "&date=" + today + parseInt(APIdayTwo),
+                "url": "https://covid-19-statistics.p.rapidapi.com/reports?region_province=" + covidState + "&date=" + secondAPIDate,
                 "method": "GET",
                 "headers": {
                     "x-rapidapi-host": "covid-19-statistics.p.rapidapi.com",
